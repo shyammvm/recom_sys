@@ -4,27 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recommendation System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Recommendation System</h1>
-    <form method="post" action="{% url 'recommendation_result' %}">
+    <form class="mt-4" id="recommendationForm" method="post" action="{% url 'recommendation_result' %}">
         {% csrf_token %}
-        <label for="customer_id">Select Customer ID:</label>
-        <select name="customer_id" id="customer_id">
-            {% for customer_id in customer_ids %}
-            <option value="{{ customer_id }}">{{ customer_id }}</option>
-            {% endfor %}
-        </select>
-
-        <!-- Add a dropdown for selecting a product ID -->
-        <label for="product_id">Select Product ID:</label>
-        <select name="product_id" id="product_id">
-            {% for product_id in product_ids %}
-            <option value="{{ product_id }}">{{ product_id }}</option>
-            {% endfor %}
-        </select>
-        
-        <button type="submit">Get Recommendations</button>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">O-list Ecommerce</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a>
+                    <select class="form-select" name="customer_id" id="customer_id">
+                            {% for customer_id in customer_ids %}
+                            <option value="{{ customer_id }}">{{ customer_id }}</option>
+                            {% endfor %}
+                    </select>
+                    </a>
+                </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+        <div class="container mt-4">
+            <div class="row">
+                {% for product_id in product_ids %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="{{ image_path }}" class="card-img-top" alt="product_image" width="300" height="200">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ product_id }}</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <button type="button" class="btn btn-primary btn-buy" data-product-id="{{ product_id }}">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <input type="hidden" name="product_id" id="selected_product_id">
+        </div>
     </form>
+
+    <!-- Bootstrap JS (optional, if you need JavaScript features) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-VGy+3jq8Q+1n3DbR2JX6zrZcAIY8qT4WuM7cZXs2B/Qm3wZccV+LFFvoJ0e5Izcx" crossorigin="anonymous"></script>
+
+    <!-- JavaScript to submit the form when a "Buy Now" button is clicked -->
+    <script>
+        // Get the form element
+        const form = document.getElementById('recommendationForm');
+        // Get all "Buy Now" buttons
+        const buyButtons = document.querySelectorAll('.btn-buy');
+
+        // Loop through each "Buy Now" button and add a click event listener
+        buyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Get the product ID from the data attribute
+                const productId = button.getAttribute('data-product-id');
+                // Set the selected product ID in the hidden input field
+                document.getElementById('selected_product_id').value = productId;
+                // Submit the form
+                form.submit();
+            });
+        });
+    </script>
 </body>
 </html>
