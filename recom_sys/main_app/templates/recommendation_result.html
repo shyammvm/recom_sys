@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation Results</title>
+</head>
+<body>
+    <h1>Recommendation Results</h1>
+
+    <h2>Similar Products:</h2>
+    <ul>
+        {% for product_id in recommendations.sim_prod %}
+        <li>{{ product_id }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Previous Purchases:</h2>
+    <ul>
+        {% for product_id in recommendations.prev_purch %}
+        <li>{{ product_id }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Cluster Recommendations:</h2>
+    <ul>
+        {% for product_id in recommendations.cluster_recomm %}
+        <li>{{ product_id }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Location Recommendations:</h2>
+    <ul>
+        {% for product_id in recommendations.loc_recomm %}
+        <li>{{ product_id }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
