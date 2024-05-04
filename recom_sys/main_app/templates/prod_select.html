@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,8 @@
                 {% for product_id in product_ids %}
                 <div class="col-md-4 mb-3">
                     <div class="card">
-                        <img src="{{ image_path }}" class="card-img-top" alt="product_image" width="300" height="200">
+                        
+                        <img src="{% static 'images/cart.png' %}" class="card-img-top" alt="product_image" width="300" height="200">
                         <div class="card-body">
                           <h5 class="card-title">{{ product_id.0 }}</h5>
                           <p class="card-text">Product Category : {{product_id.1}}</p>

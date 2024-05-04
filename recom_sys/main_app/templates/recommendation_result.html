@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,13 +21,16 @@
             <p class="text-uppercase">{{customer_id}}</p>
         </div>
     </nav>
+    <br>
+    <br>
+    <br>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card mb-3" style="max-width: 1000px;" >
                     <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="{{image_path}}" class="card-img-top" alt="product_image" width="900" height="600">
+                        <img src="{% static 'images/big_cart.jpg' %}" class="card-img-top" alt="product_image" width="900" height="200">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -55,7 +59,7 @@
                         {% for product_id in recommendations.sim_prod %}
                         <div class="col-md-3 mb-3">
                             <div class="card" style="width: 14rem;">
-                                <img src="{{ image_path }}" class="card-img-top" alt="product_image" width="200" height="150">
+                                <img src="{% static 'images/cart.png' %}" class="card-img-top" alt="product_image" width="200" height="150">
                                 <div class="card-body">
                                     <h6 class="card-title" style="font-size: 1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 0;">{{ product_id.0 }}</h6>
                                     <p class="card-text" style="font-size: 0.8rem; margin-bottom: 0;">Product Category : {{ product_id.1 }}</p>
@@ -87,7 +91,7 @@
                         {% for product_id in recommendations.prev_purch %}
                         <div class="col-md-3 mb-3">
                             <div class="card" style="width: 14rem;">
-                                <img src="{{ image_path }}" class="card-img-top" alt="product_image" width="200" height="150">
+                                <img src="{% static 'images/cart.png' %}" class="card-img-top" alt="product_image" width="200" height="150">
                                 <div class="card-body">
                                     <h6 class="card-title" style="font-size: 1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 0;">{{ product_id.0 }}</h6>
                                     <p class="card-text" style="font-size: 0.8rem; margin-bottom: 0;">Product Category : {{ product_id.1 }}</p>
@@ -119,7 +123,7 @@
                         {% for product_id in recommendations.cluster_recomm %}
                         <div class="col-md-3 mb-3">
                             <div class="card" style="width: 14rem;">
-                                <img src="{{ image_path }}" class="card-img-top" alt="product_image" width="200" height="150">
+                                <img src="{% static 'images/cart.png' %}" class="card-img-top" alt="product_image" width="200" height="150">
                                 <div class="card-body">
                                     <h6 class="card-title" style="font-size: 1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 0;">{{ product_id.0 }}</h6>
                                     <p class="card-text" style="font-size: 0.8rem; margin-bottom: 0;">Product Category : {{ product_id.1 }}</p>
@@ -151,7 +155,7 @@
                         {% for product_id in recommendations.loc_recomm %}
                         <div class="col-md-3 mb-3">
                             <div class="card" style="width: 14rem;">
-                                <img src="{{ image_path }}" class="card-img-top" alt="product_image" width="200" height="150">
+                                <img src="{% static 'images/cart.png' %}" class="card-img-top" alt="product_image" width="200" height="150">
                                 <div class="card-body">
                                     <h6 class="card-title" style="font-size: 1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 0;">{{ product_id.0 }}</h6>
                                     <p class="card-text" style="font-size: 0.8rem; margin-bottom: 0;">Product Category : {{ product_id.1 }}</p>
@@ -168,6 +172,8 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
     <input type="hidden" name="product_id" id="selected_product_id">
 </form> 
  <!-- JavaScript to handle form submission with product ID -->
