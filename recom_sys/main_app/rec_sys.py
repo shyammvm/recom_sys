@@ -18,19 +18,18 @@ def product_rec_cuid_pid(customer_unique_id, product_id):
   #similar_products
 #   print('similar products:')
   prod_record = product_info[product_info['product_id'] == product_id].iloc[0]
-  prod_cat = prod_record['product_category'].title().replace('_', ' ')
+  prod_cat = prod_record['product_category']
   prod_price = prod_record['price']
   prod_rating = prod_record['avg_total_review']
   prod_in_cat = product_info[product_info['product_category'] == prod_cat]
-  average_reviews = prod_in_cat.groupby('product_id')['avg_total_review'].mean()
-  sorted_products = average_reviews.sort_values(ascending=False)
-  top_10_products_sim = sorted_products.head(10)
-#   print(top_10_products_sim)
-#   print('product category:', prod_cat)
-  similar_prods = sorted_products.head(10).index.tolist()
-#   print('similar products:', similar_prods)
-  recom_dict['curr_cat'] = prod_cat
-  recom_dict['curr_price'] = prod_price
+  # print(prod_in_cat)
+  prod_in_cat = prod_in_cat[['product_id','product_category', 'price', 'avg_total_review']]
+  prod_in_cat_sorted = prod_in_cat.sort_values(by='avg_total_review', ascending=False, inplace = True)
+  # print(prod_in_cat)
+  similar_prods = prod_in_cat.head(10).values.tolist()
+  similar_prods = [[item[0], item[1].title().replace('_', ' '), round(item[2],2), round(item[3],1)] for item in similar_prods]
+  recom_dict['curr_cat'] = prod_cat.title().replace('_', ' ')
+  recom_dict['curr_price'] = round(prod_price,2)
   recom_dict['curr_review'] = round(prod_rating, 1)
   recom_dict['sim_prod'] = similar_prods
 
@@ -55,18 +54,14 @@ def product_rec_cuid_pid(customer_unique_id, product_id):
 #   print('categories:',prev_categories)
 
   # Get all products in categories of previous purchases
-  products_in_categories = product_info[product_info['product_category'].isin(prev_categories)][['product_id','avg_total_review']]
+  products_in_categories = product_info[product_info['product_category'].isin(prev_categories)][['product_id','product_category', 'price', 'avg_total_review']]
 
   # Sort products by average review in descending order
   sorted_products = products_in_categories.sort_values(by='avg_total_review', ascending=False)
 
   # Get top 10 products
-  top_10_products_prev = sorted_products.head(10)
-  previous_purchases =  sorted_products.head(10).product_id.tolist()
-
-  # Now top_10_products contains the top 10 products sorted by average review
-#   print(top_10_products_prev)
-#   print('previous purchases:', previous_purchases)
+  previous_purchases =  sorted_products.head(10).values.tolist()
+  previous_purchases = [[item[0], item[1].title().replace('_', ' '), round(item[2],2), round(item[3],1)] for item in previous_purchases]
   recom_dict['prev_purch'] = previous_purchases
 
 
@@ -80,13 +75,12 @@ def product_rec_cuid_pid(customer_unique_id, product_id):
   all_ids = [id for sublist in split_ids for id in sublist]
   unique_ids = list(set(all_ids))
   # print(unique_ids)
-  filtered_product_info = product_info[product_info['product_id'].isin(unique_ids)]
-  average_review_by_product = filtered_product_info.groupby('product_id')['avg_total_review'].mean()
-  sorted_products = average_review_by_product.sort_values(ascending=False)
-  top_ten_products_clust = sorted_products.head(10)
+  filtered_product_info = product_info[product_info['product_id'].isin(unique_ids)][['product_id','product_category', 'price', 'avg_total_review']]
+  sorted_products = filtered_product_info.sort_values(by='avg_total_review', ascending=False)
 #   print(top_ten_products_clust)
-  cluster_recomm = top_ten_products_clust.index.tolist()
+  cluster_recomm = sorted_products.head(10).values.tolist()
 #   print('cluster_recomm:', cluster_recomm)
+  cluster_recomm = [[item[0], item[1].title().replace('_', ' '), round(item[2],2), round(item[3],1)] for item in cluster_recomm]
   recom_dict['cluster_recomm'] = cluster_recomm
 
 
@@ -98,14 +92,14 @@ def product_rec_cuid_pid(customer_unique_id, product_id):
   split_ids = filter_byloc['product_ids'].str.split(',')
   all_ids = [id for sublist in split_ids for id in sublist]
   unique_ids = list(set(all_ids))
-  filtered_product_info = product_info[product_info['product_id'].isin(unique_ids)]
-  average_review_by_product = filtered_product_info.groupby('product_id')['avg_total_review'].mean()
-  sorted_products = average_review_by_product.sort_values(ascending=False)
-  top_ten_products_loc = sorted_products.head(10)
+  filtered_product_info = product_info[product_info['product_id'].isin(unique_ids)][['product_id','product_category', 'price', 'avg_total_review']]
+  sorted_products = filtered_product_info.sort_values(by='avg_total_review', ascending=False)
 #   print(top_ten_products_loc)
-  loc_recomm = top_ten_products_loc.index.tolist()
+  loc_recomm = sorted_products.head(10).values.tolist()
+  loc_recomm = [[item[0], item[1].title().replace('_', ' '), round(item[2],2), round(item[3],1)] for item in loc_recomm]
 #   print('loc_recomm:', loc_recomm)
   recom_dict['loc_recomm'] = loc_recomm
+#   print(recom_dict)
 
   return recom_dict
 

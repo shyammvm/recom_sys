@@ -19,6 +19,8 @@ def recommendation_view(request):
         # Get the selected customer_unique_id and product_id from the form submission
         customer_unique_id = request.POST.get('customer_id')
         product_id = request.POST.get('product_id')
+        print(customer_unique_id)
+        print(product_id)
         # Call the recommendation function with the selected customer_unique_id and product_id
         recommendations = product_rec_cuid_pid(customer_unique_id, product_id)
 
@@ -29,5 +31,8 @@ def recommendation_view(request):
         customer_data = pd.read_csv(cust_info_path)
         customer_ids = random.sample(customer_data['customer_unique_id'].tolist(),20)
         product_info = pd.read_csv(product_info_path)
-        product_ids = random.sample(product_info['product_id'].tolist(),20)
+        product_data = product_info[['product_id', 'product_category', 'price', 'avg_total_review']].values.tolist()
+        product_ids = random.sample(product_data, 20)
+        product_ids = [[item[0], item[1].title().replace('_', ' '), round(item[2],2), round(item[3],1)] for item in product_ids]
+        # product_ids = random.sample(product_info['product_id'].tolist(),20)
         return render(request, 'prod_select.html', {'customer_ids': customer_ids, 'product_ids': product_ids, 'image_path' :image_path})

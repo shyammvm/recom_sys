@@ -12,7 +12,7 @@
         {% csrf_token %}
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">O-list Ecommerce</a>
+            <a class="navbar-brand" href="{% url 'recommendation' %}">O-list Ecommerce</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -38,9 +38,11 @@
                     <div class="card">
                         <img src="{{ image_path }}" class="card-img-top" alt="product_image" width="300" height="200">
                         <div class="card-body">
-                          <h5 class="card-title">{{ product_id }}</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <button type="button" class="btn btn-primary btn-buy" data-product-id="{{ product_id }}">Buy Now</button>
+                          <h5 class="card-title">{{ product_id.0 }}</h5>
+                          <p class="card-text">Product Category : {{product_id.1}}</p>
+                          <p class="card-text"><small class="text-body-secondary">$ {{product_id.2}}</small></p>
+                          <p class="card-text"><small class="text-body-secondary">Rating : {{product_id.3}}</small></p>
+                          <button type="button" class="btn btn-primary btn-buy" data-product-id="{{ product_id.0 }}">Buy Now</button>
                         </div>
                     </div>
                 </div>
