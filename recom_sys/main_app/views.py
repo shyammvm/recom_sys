@@ -22,6 +22,7 @@ def recommendation_view(request):
         customer_unique_id = request.POST.get('customer_id')
         product_id = request.POST.get('product_id')
         location = customer_data[customer_data['customer_unique_id'] == customer_unique_id]['customer_state'].iloc[0]
+        city = customer_data[customer_data['customer_unique_id'] == customer_unique_id]['customer_city'].iloc[0].title()
         print(location)
         print(customer_unique_id)
         print(product_id)
@@ -29,7 +30,7 @@ def recommendation_view(request):
         recommendations = product_rec_cuid_pid(customer_unique_id, product_id)
 
         # Pass the recommendations to the template for display
-        return render(request, 'recommendation_result.html', {'recommendations': recommendations, 'customer_id': customer_unique_id, 'product_id': product_id, 'image_path' :image_path_big, 'customer_state': location})
+        return render(request, 'recommendation_result.html', {'recommendations': recommendations, 'customer_id': customer_unique_id, 'product_id': product_id, 'image_path' :image_path_big, 'customer_state': location, 'city':city})
     else:
         # Load customer data from CSV file
         # customer_data = pd.read_csv(cust_info_path)

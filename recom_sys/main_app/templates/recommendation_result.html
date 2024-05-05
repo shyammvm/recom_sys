@@ -27,17 +27,18 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card mb-3" style="max-width: 1000px;" >
+                <div class="card mb-3" style="max-width: 2000px;" >
                     <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="{% static 'images/big_cart.jpg' %}" class="card-img-top" alt="product_image" width="900" height="200">
+                        <img src="{% static 'images/big_cart.jpg' %}" class="card-img-top" alt="product_image" width="1500" height="250">
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="card-body">
                         <h5 class="card-title">{{product_id}}</h5>
                         <p class="card-text">Product Category: {{recommendations.curr_cat}}</p>
                         <p class="card-text"><small class="text-body-secondary">$ {{recommendations.curr_price}}</small></p>
                         <p class="card-text"><small class="text-body-secondary">Rating : {{recommendations.curr_review}}</small></p>
+                        <p class="card-text">Address: {{city}}, {{customer_state}}</p>
                         </div>
                     </div>
                     </div>
