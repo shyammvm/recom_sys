@@ -29,6 +29,12 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: go to directory
+        run: cd recom_sys
+
+      - name: Run app
+        run: python manage.py runserver 0.0.0.0/0
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
